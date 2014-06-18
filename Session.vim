@@ -8,13 +8,22 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +16 \[Vundle]\ Installer
-silent! argdel *
+badd +0 ~/Documents/workspace/ho-mobile/actions/ch_hunterOwner.js
+args ~/Documents/workspace/ho-mobile/actions/ch_hunterOwner.js
+edit ~/Documents/workspace/ho-mobile/actions/ch_hunterOwner.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
+argglobal
+let s:l = 40 - ((2 * winheight(0) + 15) / 30)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+40
+normal! 01|
+lcd ~/Documents/workspace/ho-mobile/actions
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

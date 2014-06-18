@@ -1,14 +1,76 @@
  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-"             Leeiio的 Vim 配置文件
+"             inlost 的 Vim 配置文件
 "
-"         Author: Leeiio<guaniu@gmail.com>
-"        Website: http://leeiio.me/
-"          Since: 2010-02-22
-"  Last Modified: 2010-10-14 14:28:01 leeiio
+"         Author: sailflyer@gmail.com
+"        Website: http://cloudlii.com/
+"          Since: 2014-06-28
+"  Last Modified: [2014.06.18 17:53:09@CST] inlost
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"source $VIMRUNTIME/vimrc_example.vim
+
+"=====================
+"   Vundle
+"=====================
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/EasyGrep'
+Plugin 'mattn/emmet-vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'skammer/vim-css-color'
+Plugin 'moll/vim-node'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-scripts/The-NERD-tree'
+Plugin 'vim-scripts/bufexplorer.zip'
+Plugin 'vim-scripts/Marks-Browser'
+Plugin 'Shougo/neocomplcache.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'kien/ctrlp.vim'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'BufferExplorer'
+" Git plugin not hosted on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+" Plugin 'user/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 if v:version < 700
     echoerr 'This _vimrc requires Vim 7 or later.'
@@ -159,6 +221,8 @@ set hidden
 "cliboard seting
 set clipboard+=unnamed " set clipboard
 
+let g:tagbar_ctags_bin = "/usr/local/Cellar/ctags/5.8/bin/ctags"
+
 " =====================
 "    默认为 UTF-8 编码
 " =====================
@@ -228,8 +292,8 @@ if has('gui_running')
             " 开启抗锯齿渲染
             set anti
             " MacVim 下的字体配置
-            set guifont=YaHei_Consolas_Hybrid:h16
-            set guifontwide=YaHei_Consolas_Hybrid:h16
+            set guifont=YaHei_Consolas_Hybrid:h18
+            set guifontwide=YaHei_Consolas_Hybrid:h18
 
             "set transparency=8
             set lines=222 columns=222
@@ -275,21 +339,16 @@ endfunction
 " =====================
 if has('syntax')
     " 保证语法高亮
-    syntax on
+    syntax enable
 
     set background=light
-
-    if has('gui_running')
-        colorscheme solarized
-        let g:colors_name="solarized"
-    endif
+    colorscheme solarized
 
     " 默认编辑器配色
     " au BufNewFile,BufRead,BufEnter,WinEnter * colo yytextmate
 
     " 各不同类型的文件配色不同
     "au BufNewFile,BufRead,BufEnter,WinEnter *.wiki colo moria
-
 endif
 
 "Highlight current
@@ -297,9 +356,9 @@ if has("gui_running")
     set cursorline
     set cursorcolumn
     "hi cursorline guibg=#0D142C
-    "hi cursorline guibg=#FCF5C9
+    hi cursorline guibg=#E8E9E8
     "hi CursorColumn guibg=#FCF5C9
-    "hi CursorColumn guibg=#FCF5C9
+    hi CursorColumn guibg=#E8E9E8
 endif
 
 if has('multi_byte_ime')
@@ -328,9 +387,6 @@ if has("autocmd")
             \   exe "normal g`\"" |
             \ endif
     augroup END
-
-    " Auto Check Syntax
-    au BufWritePost,FileWritePost *.js,*.php call CheckSyntax(1)
 
     " JavaScript 语法高亮
     au FileType html,javascript let g:javascript_enable_domhtmlcss = 1
@@ -494,60 +550,97 @@ nmap <leader>b :<C-U>call BufPos_ActivateBuffer(v:count)<CR>
 " =====================
 " 插件配置
 " =====================
-"
-set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+"neocomplcache
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Enable heavy features.
+" Use camel case completion.
+"let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+"let g:neocomplcache_enable_underbar_completion = 1
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/EasyGrep'
-Plugin 'mattn/emmet-vim'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'skammer/vim-css-color'
-Plugin 'Lokaltog/powerline'
-Plugin 'garbas/vim-snipmate'
-Plugin 'scrooloose/nerdtree'
-Plugin 'vim-scripts/The-NERD-tree'
-Plugin 'vim-scripts/bufexplorer.zip'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'BufferExplorer'
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplcache_enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplcache_enable_insert_char_pre = 1
+
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
 "easyGrep
@@ -580,18 +673,10 @@ map <c-h> ,c<space>
 
 let g:neocomplcache_min_syntax_length = 3
 
-" Tag list (ctags)
-let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
-
-" Javascript in CheckSyntax
-if has('win32')
-    let g:checksyntax_cmd_javascript  = 'jsl -conf '.shellescape($VIM . '\vimfiles\plugin\jsl.conf')
-else
-    let g:checksyntax_cmd_javascript  = 'jsl -conf ~/.vim/plugin/jsl.conf'
-endif
-let g:checksyntax_cmd_javascript .= ' -nofilelisting -nocontext -nosummary -nologo -process'
+"Tagbar
+nmap <leader>tg :TagbarToggle<CR>
+"CtrlP
+nmap <leader>of :CtrlP<CR>
 
 " Under the Mac(MacVim)
 if has("gui_macvim")
