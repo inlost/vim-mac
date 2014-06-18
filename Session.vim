@@ -8,22 +8,13 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 ~/Documents/workspace/static/ho/js/avatar_upload/upfile.jsp
-args ~/Documents/workspace/static/ho/js/avatar_upload/upfile.jsp
-edit ~/Documents/workspace/static/ho/js/avatar_upload/upfile.jsp
+badd +16 \[Vundle]\ Installer
+silent! argdel *
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-argglobal
-let s:l = 60 - ((22 * winheight(0) + 17) / 35)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-60
-normal! 02|
-lcd ~/Documents/workspace/static/ho/js/avatar_upload
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
