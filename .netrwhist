@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/usr/local/var/log'
 let g:netrw_dirhist_2='/Users/inlost/Documents/workspace/crm-web/.git'
 let g:netrw_dirhist_3='/Users/inlost/.ssh'
@@ -7,3 +7,5 @@ let g:netrw_dirhist_4='/Users/inlost/.config'
 let g:netrw_dirhist_5='/usr/local/nginx/conf'
 let g:netrw_dirhist_6='/Users/inlost/Downloads/About Downloads.lpdf'
 let g:netrw_dirhist_7='/Users/inlost/.vim/bundle'
+let g:netrw_dirhist_8='/Users/inlost/.vim/bundle/Vundle.vim'
+let g:netrw_dirhist_9='/Users/inlost/.ssh'

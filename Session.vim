@@ -8,22 +8,22 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 ~/Documents/workspace/ho-mobile/actions/ch_hunterOwner.js
-args ~/Documents/workspace/ho-mobile/actions/ch_hunterOwner.js
-edit ~/Documents/workspace/ho-mobile/actions/ch_hunterOwner.js
+badd +0 bundle/vim-snippets/snippets/javascript/javascript-jquery.snippets
+args ~/.vim/bundle/vim-snippets/snippets/javascript/javascript-jquery.snippets
+edit bundle/vim-snippets/snippets/javascript/javascript-jquery.snippets
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-let s:l = 40 - ((2 * winheight(0) + 15) / 30)
+let s:l = 578 - ((73 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-40
-normal! 01|
-lcd ~/Documents/workspace/ho-mobile/actions
+578
+normal! 0
+lcd ~/.vim/bundle/vim-snippets/snippets/javascript
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

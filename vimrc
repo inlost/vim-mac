@@ -44,7 +44,9 @@ Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'vim-scripts/Marks-Browser'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'Lokaltog/vim-powerline'
+Plugin 'groenewege/vim-less'
 Plugin 'kien/ctrlp.vim'
+Plugin 'othree/html5.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
@@ -356,9 +358,9 @@ if has("gui_running")
     set cursorline
     set cursorcolumn
     "hi cursorline guibg=#0D142C
-    hi cursorline guibg=#E8E9E8
+    "hi cursorline guibg=#E8E9E8
     "hi CursorColumn guibg=#FCF5C9
-    hi CursorColumn guibg=#E8E9E8
+    "hi CursorColumn guibg=#E8E9E8
 endif
 
 if has('multi_byte_ime')
@@ -595,7 +597,7 @@ function! s:my_cr_function()
   "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -624,7 +626,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType css,less setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
