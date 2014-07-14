@@ -624,6 +624,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "let g:neocomplcache_enable_auto_select = 1
 "let g:neocomplcache_disable_auto_complete = 1
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+inoremap <expr><Enter>  pumvisible() ? "\<C-Y>" : "\<Enter>"
 
 " Enable omni completion.
 autocmd FileType css,less setlocal omnifunc=csscomplete#CompleteCSS

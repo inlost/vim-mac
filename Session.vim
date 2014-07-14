@@ -8,22 +8,12 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 bundle/vim-snippets/snippets/javascript/javascript-jquery.snippets
-args ~/.vim/bundle/vim-snippets/snippets/javascript/javascript-jquery.snippets
-edit bundle/vim-snippets/snippets/javascript/javascript-jquery.snippets
+silent! argdel *
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-argglobal
-let s:l = 578 - ((73 * winheight(0) + 15) / 30)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-578
-normal! 0
-lcd ~/.vim/bundle/vim-snippets/snippets/javascript
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
