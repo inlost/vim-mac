@@ -1,3 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/Users/inlost/Documents/workspace/mobile-ho/.git'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/inlost/Documents/workspace/hr-web/.git'
+let g:netrw_dirhist_2='/Users/inlost/Documents/Microsoft User Data/Office 2011 Identities'
+let g:netrw_dirhist_3='/Users/inlost/Documents/Microsoft User Data/Office 2011 Identities/Main Identity'

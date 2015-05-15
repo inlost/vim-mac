@@ -8,6 +8,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
+argglobal
 silent! argdel *
 set splitbelow splitright
 set nosplitbelow

@@ -47,6 +47,8 @@ Plugin 'Lokaltog/vim-powerline'
 Plugin 'groenewege/vim-less'
 Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'burnettk/vim-angular'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
@@ -627,7 +629,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 inoremap <expr><Enter>  pumvisible() ? "\<C-Y>" : "\<Enter>"
 
 " Enable omni completion.
-autocmd FileType css,less setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType css,less,scss setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
