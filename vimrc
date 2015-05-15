@@ -399,11 +399,11 @@ if has("autocmd")
     " 给各语言文件添加 Dict
     if has('win32')
         au FileType php setlocal dict+=$VIM/vimfiles/dict/php_funclist.dict
-        au FileType css,less setlocal dict+=$VIM/vimfiles/dict/css.dict
+        au FileType css,less,scss setlocal dict+=$VIM/vimfiles/dict/css.dict
         au FileType javascript setlocal dict+=$VIM/vimfiles/dict/javascript.dict
     else
         au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
-        au FileType css,less setlocal dict+=~/.vim/dict/css.dict
+        au FileType css,less,scss setlocal dict+=~/.vim/dict/css.dict
         au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
     endif
 
@@ -412,10 +412,10 @@ if has("autocmd")
     au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
     " 增加 ActionScript 语法支持
-    au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.as setf actionscript
+    " au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.as setf actionscript
 
     " CSS3 语法支持
-    au BufRead,BufNewFile *.css set ft=css syntax=css3
+    au BufRead,BufNewFile *.css,*.less,*.scss set ft=css syntax=css3
 
     " 增加 Objective-C 语法支持
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
@@ -442,10 +442,11 @@ function! ClosePair(char)
         return a:char
     endif
 endf
-"auto close for PHP and Javascript script
-au FileType css,html,php,c,python,javascript exe AutoClose()
 
 au BufNewFile,BufRead *.ejs set filetype=html
+au BufNewFile,BufRead *.scss set filetype=css
+"auto close for PHP and Javascript script
+au FileType css,html,php,c,python,javascript exe AutoClose()
 
 " 自动载入VIM配置文件
 autocmd! bufwritepost vimrc source $MYVIMRC
