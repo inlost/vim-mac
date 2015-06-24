@@ -296,8 +296,8 @@ if has('gui_running')
             " 开启抗锯齿渲染
             set anti
             " MacVim 下的字体配置
-            set guifont=YaHei_Consolas_Hybrid:h18
-            set guifontwide=YaHei_Consolas_Hybrid:h18
+            set guifont=source_code_pro:h18
+            set guifontwide=source_code_pro:h18
 
             "set transparency=8
             set lines=222 columns=222
@@ -392,6 +392,9 @@ if has("autocmd")
             \ endif
     augroup END
 
+
+    
+
     " JavaScript 语法高亮
     au FileType html,javascript let g:javascript_enable_domhtmlcss = 1
     au BufRead,BufNewFile *.js setf jquery
@@ -399,11 +402,11 @@ if has("autocmd")
     " 给各语言文件添加 Dict
     if has('win32')
         au FileType php setlocal dict+=$VIM/vimfiles/dict/php_funclist.dict
-        au FileType css,less,scss setlocal dict+=$VIM/vimfiles/dict/css.dict
+        au FileType css setlocal dict+=$VIM/vimfiles/dict/css.dict
         au FileType javascript setlocal dict+=$VIM/vimfiles/dict/javascript.dict
     else
         au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
-        au FileType css,less,scss setlocal dict+=~/.vim/dict/css.dict
+        au FileType css setlocal dict+=~/.vim/dict/css.dict
         au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
     endif
 
@@ -415,7 +418,7 @@ if has("autocmd")
     " au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.as setf actionscript
 
     " CSS3 语法支持
-    au BufRead,BufNewFile *.css,*.less,*.scss set ft=css syntax=css3
+    au BufRead,BufNewFile *.css,*.less,*scss set ft=css syntax=css3
 
     " 增加 Objective-C 语法支持
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
@@ -423,6 +426,9 @@ if has("autocmd")
     " 将指定文件的换行符转换成 UNIX 格式
     au FileType php,javascript,html,css,python,vim,vimwiki set ff=unix
 endif
+
+au BufNewFile,BufRead *.ejs set filetype=html
+au BufNewFile,BufRead *.scss,*.less set filetype=css
 
 " 括号自动补全
 function! AutoClose()
@@ -442,9 +448,6 @@ function! ClosePair(char)
         return a:char
     endif
 endf
-
-au BufNewFile,BufRead *.ejs set filetype=html
-au BufNewFile,BufRead *.scss set filetype=css
 "auto close for PHP and Javascript script
 au FileType css,html,php,c,python,javascript exe AutoClose()
 
@@ -630,7 +633,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 inoremap <expr><Enter>  pumvisible() ? "\<C-Y>" : "\<Enter>"
 
 " Enable omni completion.
-autocmd FileType css,less,scss setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete

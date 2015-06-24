@@ -18,12 +18,12 @@ set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-let s:l = 35 - ((10 * winheight(0) + 18) / 37)
+let s:l = 300 - ((121 * winheight(0) + 110) / 220)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-35
-normal! 030|
+300
+normal! 040|
 lcd ~/.vim
 tabnext 1
 if exists('s:wipebuf')
