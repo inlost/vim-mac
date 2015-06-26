@@ -296,8 +296,8 @@ if has('gui_running')
             " 开启抗锯齿渲染
             set anti
             " MacVim 下的字体配置
-            set guifont=source_code_pro:h18
-            set guifontwide=source_code_pro:h18
+            set guifont=source_code_pro:h20
+            set guifontwide=source_code_pro:h20
 
             "set transparency=8
             set lines=222 columns=222
@@ -392,9 +392,6 @@ if has("autocmd")
             \ endif
     augroup END
 
-
-    
-
     " JavaScript 语法高亮
     au FileType html,javascript let g:javascript_enable_domhtmlcss = 1
     au BufRead,BufNewFile *.js setf jquery
@@ -424,7 +421,7 @@ if has("autocmd")
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
 
     " 将指定文件的换行符转换成 UNIX 格式
-    au FileType php,javascript,html,css,python,vim,vimwiki set ff=unix
+    au FileType php,javascript,html,css,python,vim set ff=unix
 endif
 
 au BufNewFile,BufRead *.ejs set filetype=html
@@ -493,9 +490,6 @@ nmap bp :bp<cr>
 " 插件快捷键
 nmap <C-d> :NERDTree<cr>
 nmap <C-e> :BufExplorer<cr>
-
-" 插入模式按 F4 插入当前时间
-imap <f4> <C-r>=GetDateStamp()<cr>
 
 " 新建 XHTML 、PHP、Javascript 文件的快捷键
 nmap <leader>cxhtml :NewQuickTemplateTab xhtml<cr>
@@ -703,33 +697,6 @@ if has("gui_macvim")
 
     " 如果为空文件，则自动设置当前目录为桌面
     "lcd ~/Desktop/
-endif
-
-" VimWiki 配置
-if !exists("g:vimwiki_list")
-    let g:vimwiki_list = [
-                \{"path": "~/Sites/VimWiki/wikiIndex", "path_html": "~/Sites/VimWiki/wikiHtml",
-                \   "html_footer": "~/Sites/VimWiki/wikiTemplate/footer.tpl", "html_header": "~/Sites/VimWiki/wikiTemplate/header.tpl",
-                \   "auto_export": 1}]
-    let g:vimwiki_auto_checkbox = 0
-    let g:vimwiki_use_calendar = 0  "禁用calendar
-    if has('win32')
-        " 注意！
-        " 1、如果在 Windows 下，盘符必须大写
-        " 2、路径末尾最好加上目录分隔符
-        let s:vimwiki_root = "F:/My Dropbox/VimWiki"
-        let g:vimwiki_list = [
-                    \{"path": s:vimwiki_root."/wikiIndex/",
-                    \   "html_footer": s:vimwiki_root."/wikiTemplate/footer.tpl",
-                    \   "html_header": s:vimwiki_root."/wikiTemplate/header.tpl",
-                    \   "path_html": s:vimwiki_root."/wikiHtml/", "auto_export": 1}]
-        let g:vimwiki_w32_dir_enc = 'cp936'
-    endif
-
-    au FileType vimwiki set ff=unix fenc=utf8 noswapfile nobackup
-    "au FileType vimwiki imap <C-t> <c-r>=TriggerSnippet()<cr>
-
-    nmap <C-i><C-i> :VimwikiTabGoHome<cr>
 endif
 
 " 日历插件
