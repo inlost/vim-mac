@@ -39,9 +39,9 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
-Plugin 'vim-scripts/The-NERD-tree'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'vim-scripts/Marks-Browser'
+Plugin 'vim-scripts/ShowMarks'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'groenewege/vim-less'
@@ -417,6 +417,9 @@ if has("autocmd")
     " CSS3 语法支持
     au BufRead,BufNewFile *.css,*.less,*scss set ft=css syntax=css3
 
+    "art 高亮支持
+    au BufRead,BufNewFile *.art,*.vue set ft=html
+
     " 增加 Objective-C 语法支持
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
 
@@ -488,7 +491,7 @@ nmap bn :bn<cr>
 nmap bp :bp<cr>
 
 " 插件快捷键
-nmap <C-d> :NERDTree<cr>
+nmap <C-v> :NERDTree<cr>
 nmap <C-e> :BufExplorer<cr>
 
 " 新建 XHTML 、PHP、Javascript 文件的快捷键
@@ -653,6 +656,11 @@ let tlist_html_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 let tlist_xhtml_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 
 " showmarks setting
+" <Leader>mt   - 打开/关闭ShowMarks插件
+" <Leader>mo   - 强制打开ShowMarks插件
+" <Leader>mh   - 清除当前行的标记
+" <Leader>ma   - 清除当前缓冲区中所有的标记
+" <Leader>mm   - 在当前行打一个标记，使用下一个可用的标记名 
 " Enable ShowMarks
 let showmarks_enable = 1
 " Show which marks
