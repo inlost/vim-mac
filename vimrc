@@ -49,6 +49,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'burnettk/vim-angular'
+Plugin 'heavenshell/vim-jsdoc'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
@@ -579,7 +580,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+    \ }
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
@@ -676,6 +677,11 @@ nmap <silent> <leader>bm :MarksBrowser<cr>
 
 "zenCoding
 let g:user_zen_mode='inv'
+
+"jsDoc
+nmap <silent> <C-l> <Plug>(jsdoc)
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_input_description=1
 
 "对NERD_commenter的设置
 let NERDShutUp=1
