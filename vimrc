@@ -29,11 +29,9 @@ Plugin 'gmarik/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/EasyGrep'
 Plugin 'mattn/emmet-vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'skammer/vim-css-color'
-Plugin 'moll/vim-node'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
@@ -44,16 +42,16 @@ Plugin 'vim-scripts/Marks-Browser'
 Plugin 'vim-scripts/ShowMarks'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'Lokaltog/vim-powerline'
-Plugin 'groenewege/vim-less'
 Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'burnettk/vim-angular'
+Plugin 'terryma/vim-multiple-cursors'
 Plugin 'heavenshell/vim-jsdoc'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+" Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -481,12 +479,6 @@ nmap <leader>s :wa!<cr>
 nmap <leader>w :wqa!<cr>
 nmap <leader>q :qa!<cr>
 
-nmap <C-t>   :tabnew<cr>
-nmap <C-p>   :tabprevious<cr>
-nmap <C-n>   :tabnext<cr>
-nmap <C-k>   :tabclose<cr>
-nmap <C-Tab> :tabnext<cr>
-
 "切换buffer
 nmap bn :bn<cr>
 nmap bp :bp<cr>
@@ -569,6 +561,9 @@ let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
+" vim-css-color
+let g:cssColorVimDoNotMessMyUpdatetime = 1
+
 " Enable heavy features.
 " Use camel case completion.
 "let g:neocomplcache_enable_camel_case_completion = 1
@@ -649,9 +644,6 @@ let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 " https://github.com/c9s/perlomni.vim
 let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-
-"easyGrep
-map f/ <esc>:Grep
 
 let tlist_html_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 let tlist_xhtml_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
