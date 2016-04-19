@@ -37,17 +37,20 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
-Plugin 'vim-scripts/bufexplorer.zip'
-Plugin 'vim-scripts/Marks-Browser'
-Plugin 'vim-scripts/ShowMarks'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'Shougo/neocomplcache.vim'
-Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'burnettk/vim-angular'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'heavenshell/vim-jsdoc'
+Plugin 'asins/vim-dict'
+Plugin 'vim-scripts/bufexplorer.zip'
+Plugin 'vim-scripts/Marks-Browser'
+Plugin 'vim-scripts/ShowMarks'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
@@ -136,12 +139,10 @@ set t_vb= " close visual bell
 " 行号和标尺
 set ruler " 显示标尺
 set number " 行号
-set rulerformat=%15(%c%V\ %p%%%)
 
 " 命令行于状态行
 set cmdheight=1 " 设置命令行的高度
 set laststatus=2 " 始终显示状态行
-set stl=\ [File]\ %F%m%r%h%y[%{&fileformat},%{&fileencoding}]\ %w\ \ [PWD]\ %r%{GetPWD()}%h\ %=\ [Line]%l/%L\ %=\[%P] "设置状态栏的信息
 
 " 搜索
 set hlsearch  " 高亮显示搜索的内容
@@ -156,6 +157,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab " 不使用空格来替换tab
 set smarttab
+
+set linespace=0
 
 " 状态栏显示目前所执行的指令
 set showcmd
@@ -259,8 +262,8 @@ if has('gui_running')
     "set guioptions=   " 隐藏全部的gui选项
     "set guioptions+=r " 显示gui右边滚动条
     "Toggle Menu and Toolbar 使用F2隐藏/显示菜单
-    set guioptions-=m
-    set guioptions-=T
+    "set guioptions-=m
+    "set guioptions-=T
     map <silent> <F3> :if &guioptions =~# 'T' <Bar>
             \set guioptions-=T <Bar>
             \set guioptions-=m <bar>
@@ -295,8 +298,8 @@ if has('gui_running')
             " 开启抗锯齿渲染
             set anti
             " MacVim 下的字体配置
-            set guifont=source_code_pro:h20
-            set guifontwide=source_code_pro:h20
+            set guifont=Source\ Code\ Pro\ For\ Powerline:h20
+            set guifontwide=Source\ Code\ Pro\ For\ Powerline:h20
 
             "set transparency=8
             set lines=222 columns=222
@@ -397,13 +400,13 @@ if has("autocmd")
 
     " 给各语言文件添加 Dict
     if has('win32')
-        au FileType php setlocal dict+=$VIM/vimfiles/dict/php_funclist.dict
+        au FileType php setlocal dict+=$VIM/vimfiles/dict/php.dict
         au FileType css setlocal dict+=$VIM/vimfiles/dict/css.dict
         au FileType javascript setlocal dict+=$VIM/vimfiles/dict/javascript.dict
     else
-        au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
-        au FileType css setlocal dict+=~/.vim/dict/css.dict
-        au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
+        au FileType php setlocal dict+=~/.vim/bundle/vim-dict/dict/php.dic
+        au FileType css setlocal dict+=~/.vim/bundle/vim-dict/dict/css.dic
+        au FileType javascript setlocal dict+=~/.vim/bundle/vim-dict/dict/javascript.dic
     endif
 
     " 格式化 JavaScript 文件
@@ -414,10 +417,10 @@ if has("autocmd")
     " au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.as setf actionscript
 
     " CSS3 语法支持
-    au BufRead,BufNewFile *.css,*.less,*scss set ft=css syntax=css3
+    au BufRead,BufNewFile *.css,*.less,*scss set syntax=css3 filetype=css
 
     "art 高亮支持
-    au BufRead,BufNewFile *.art,*.vue set ft=html
+    au BufRead,BufNewFile *.art,*.vue set filetype=html
 
     " 增加 Objective-C 语法支持
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
@@ -425,30 +428,6 @@ if has("autocmd")
     " 将指定文件的换行符转换成 UNIX 格式
     au FileType php,javascript,html,css,python,vim set ff=unix
 endif
-
-au BufNewFile,BufRead *.ejs set filetype=html
-au BufNewFile,BufRead *.scss,*.less set filetype=css
-
-" 括号自动补全
-function! AutoClose()
-    :inoremap ( ()<ESC>i
-    :inoremap " ""<ESC>i
-    :inoremap ' ''<ESC>i
-    :inoremap { {}<ESC>i
-    :inoremap [ []<ESC>i
-    :inoremap ) <c-r>=ClosePair(')')<CR>
-    :inoremap } <c-r>=ClosePair('}')<CR>
-    :inoremap ] <c-r>=ClosePair(']')<CR>
-endf
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endf
-"auto close for PHP and Javascript script
-au FileType css,html,php,c,python,javascript exe AutoClose()
 
 " 自动载入VIM配置文件
 autocmd! bufwritepost vimrc source $MYVIMRC
@@ -487,21 +466,11 @@ nmap bp :bp<cr>
 nmap <C-v> :NERDTree<cr>
 nmap <C-e> :BufExplorer<cr>
 
-" 新建 XHTML 、PHP、Javascript 文件的快捷键
-nmap <leader>cxhtml :NewQuickTemplateTab xhtml<cr>
-nmap <leader>cphp :NewQuickTemplateTab php<cr>
-nmap <leader>cjs :NewQuickTemplateTab javascript<cr>
-nmap <leader>ccss :NewQuickTemplateTab css<cr>
-nmap <leader>cjquery :NewQuickTemplateTab jquery<cr>
-
 " 直接查看第一行生效的代码
 nmap <C-g><C-f> :call GotoFirstEffectiveLine()<cr>
 
 " 按下 Q 不进入 Ex 模式，而是退出
 nmap Q :x<cr>
-
-" 打开日历快捷键
-map cal :Calendar<cr>
 
 "Use spacebar toggle fold
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
@@ -549,7 +518,6 @@ nmap <leader>b :<C-U>call BufPos_ActivateBuffer(v:count)<CR>
 " 插件配置
 " =====================
 
-"neocomplcache
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -560,9 +528,6 @@ let g:neocomplcache_enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" vim-css-color
-let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Enable heavy features.
 " Use camel case completion.
@@ -575,7 +540,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+        \ }
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
@@ -596,7 +561,7 @@ function! s:my_cr_function()
   "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -623,7 +588,6 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "let g:neocomplcache_enable_auto_select = 1
 "let g:neocomplcache_disable_auto_complete = 1
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-inoremap <expr><Enter>  pumvisible() ? "\<C-Y>" : "\<Enter>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -633,16 +597,18 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
 endif
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
-let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
 
 
 let tlist_html_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
@@ -675,12 +641,19 @@ nmap <silent> <C-l> <Plug>(jsdoc)
 let g:jsdoc_allow_input_prompt=1
 let g:jsdoc_input_description=1
 
+"vim-airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized'
+
 "对NERD_commenter的设置
 let NERDShutUp=1
 "支持单行和多行的选择，//格式
 map <c-h> ,c<space>
 
 let g:neocomplcache_min_syntax_length = 3
+
+" auto pairs
+let g:AutoPairsFlyMode = 1
 
 "Tagbar
 nmap <leader>tg :TagbarToggle<CR>
@@ -698,33 +671,8 @@ if has("gui_macvim")
     " Set input method off
     set imdisable
 
-    " Set QuickTemplatePath
-    let g:QuickTemplatePath = $HOME.'/.vim/templates/'
-
     " 如果为空文件，则自动设置当前目录为桌面
     "lcd ~/Desktop/
-endif
-
-" 日历插件
-if has("win32")
-    let g:calendar_diary = "D:\\Program Files\\Vim\\vimfiles\\calendar"
-    autocmd BufNewFile *.cal read $VIM\vimfiles\template\calendar_morning_diary.tpl | normal ggdd "日历套用模版
-endif
-if has("gui_macvim")
-    let g:calendar_smnd = 1
-    let g:calendar_monday = 1 " week start with monday.
-    let g:calendar_weeknm = 1 " don't work with g:calendar_diary
-    let g:calendar_mark = 'left-fit' " let plus(+) near the date, like +8.
-    let g:calendar_mruler = '一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月'
-    let g:calendar_wruler = '日 一 二 三 四 五 六'
-    let g:calendar_navi_label = '上月,本月,下月'
-    let g:calendar_list = [
-        \ {'name': 'Works[Doit.im]', 'path': '~/diary/works/Doit.im', 'ext': 'wiki'},
-        \ {'name': 'Works', 'path': '~/diary/works', 'ext': 'task'},
-        \ {'name': 'Tasks', 'path': '~/diary/tasks', 'ext': 'task'},
-        \ {'name': 'Diary', 'path': '~/diary/diary', 'ext': 'diary'},
-        \ ]
-    autocmd BufNewFile *.cal read $HOME/.vim/templates/calendar_morning_diary.tpl | normal ggdd "日历套用模版
 endif
 
 " on Windows, default charset is gbk

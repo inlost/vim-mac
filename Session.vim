@@ -8,11 +8,9 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 ~/workSpace/wing/refund/js/mod/actions/buyer-cancel-refund-action.js
-badd +57 vimrc
+badd +435 vimrc
 argglobal
 silent! argdel *
-argadd ~/workSpace/wing/refund/js/mod/actions/buyer-cancel-refund-action.js
 edit vimrc
 set splitbelow splitright
 set nosplitbelow
@@ -20,13 +18,13 @@ set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-let s:l = 31 - ((7 * winheight(0) + 14) / 29)
+let s:l = 32 - ((5 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-31
-normal! 015|
-lcd ~/workSpace/wing/refund/js/mod/actions
+32
+normal! 0
+lcd ~/.vim
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
