@@ -8,7 +8,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +435 vimrc
+badd +44 vimrc
 argglobal
 silent! argdel *
 edit vimrc
@@ -18,11 +18,11 @@ set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-let s:l = 32 - ((5 * winheight(0) + 14) / 28)
+let s:l = 45 - ((6 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-32
+45
 normal! 0
 lcd ~/.vim
 tabnext 1

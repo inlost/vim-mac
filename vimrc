@@ -41,6 +41,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -129,7 +130,7 @@ set wrap " 设置自动折行
 
 " 标签页
 set tabpagemax=15 " 最多15个标签
-set showtabline=0 " 总是显示标签栏
+set showtabline=1 " 有多个标签时才显示标签栏
 
 " 关闭遇到错误时的声音提示
 set noerrorbells
@@ -253,17 +254,16 @@ else
     echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
 endif
 
-
 " =====================
 " 图形界面
 " =====================
 if has('gui_running')
     "set guioptions=mcr " 只显示菜单
-    "set guioptions=   " 隐藏全部的gui选项
+    set guioptions=   " 隐藏全部的gui选项
     "set guioptions+=r " 显示gui右边滚动条
     "Toggle Menu and Toolbar 使用F2隐藏/显示菜单
-    "set guioptions-=m
-    "set guioptions-=T
+    "set guioptions-showtabline=m
+    set guioptions-=T
     map <silent> <F3> :if &guioptions =~# 'T' <Bar>
             \set guioptions-=T <Bar>
             \set guioptions-=m <bar>
@@ -434,7 +434,7 @@ autocmd! bufwritepost vimrc source $MYVIMRC
 
 " 关闭VIM的时候保存会话，按F7读取会话
 set sessionoptions=buffers,sesdir,help,tabpages,winsize
-au VimLeave * mks! ~/.vim/Session.vim
+echo has('signs')au VimLeave * mks! ~/.vim/Session.vim
 nmap <F7> :so ~/.vim/Session.vim<CR>
 
 
@@ -457,6 +457,7 @@ let g:mapleader = ","
 nmap <leader>s :wa!<cr>
 nmap <leader>w :wqa!<cr>
 nmap <leader>q :qa!<cr>
+nmap <Leader>n :nohlsearch<cr>
 
 "切换buffer
 nmap bn :bn<cr>
@@ -643,6 +644,7 @@ let g:jsdoc_input_description=1
 
 "vim-airline
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#fnamemod = ':p:t'
 let g:airline_theme='solarized'
 
 "对NERD_commenter的设置
