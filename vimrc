@@ -454,10 +454,10 @@ let g:mapleader = ","
 "快速保存为,s
 "快速退出（保存）为,w
 "快速退出（不保存）为,q
-nmap <leader>s :wa!<cr>
 nmap <leader>w :wqa!<cr>
 nmap <leader>q :qa!<cr>
 nmap <Leader>n :nohlsearch<cr>
+nmap <Leader>s :! 
 
 "切换buffer
 nmap bn :bn<cr>
@@ -562,7 +562,7 @@ function! s:my_cr_function()
   "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -620,7 +620,7 @@ let tlist_xhtml_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 " <Leader>mo   - 强制打开ShowMarks插件
 " <Leader>mh   - 清除当前行的标记
 " <Leader>ma   - 清除当前缓冲区中所有的标记
-" <Leader>mm   - 在当前行打一个标记，使用下一个可用的标记名 
+" <Leader>mm   - 在当前行打一个标记，使用下一个可用的标记名
 " Enable ShowMarks
 let showmarks_enable = 1
 " Show which marks
@@ -653,9 +653,6 @@ let NERDShutUp=1
 map <c-h> ,c<space>
 
 let g:neocomplcache_min_syntax_length = 3
-
-" auto pairs
-let g:AutoPairsFlyMode = 1
 
 "Tagbar
 nmap <leader>tg :TagbarToggle<CR>
