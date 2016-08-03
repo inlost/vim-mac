@@ -31,7 +31,6 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mattn/emmet-vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'skammer/vim-css-color'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
@@ -45,10 +44,12 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
 Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'gorodinskiy/vim-coloresque'
 Plugin 'burnettk/vim-angular'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'asins/vim-dict'
+Plugin 'scrooloose/syntastic'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'vim-scripts/Marks-Browser'
 Plugin 'vim-scripts/ShowMarks'
@@ -416,8 +417,8 @@ if has("autocmd")
     " 增加 ActionScript 语法支持
     " au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.as setf actionscript
 
-    " CSS3 语法支持
-    au BufRead,BufNewFile *.css,*.less,*scss set syntax=css3 filetype=css
+    " CSS 语法支持
+    au BufRead,BufNewFile *.css,*.less,*scss set filetype=css
 
     "art 高亮支持
     au BufRead,BufNewFile *.art,*.vue set filetype=html
@@ -609,9 +610,6 @@ let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\
 " https://github.com/c9s/perlomni.vim
 let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-
-
-
 let tlist_html_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 let tlist_xhtml_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 
@@ -658,6 +656,19 @@ let g:neocomplcache_min_syntax_length = 3
 nmap <leader>tg :TagbarToggle<CR>
 "CtrlP
 nmap <leader>of :CtrlP<CR>
+
+#Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_javascript_checkers = ['eslint']
+
 
 " Under the Mac(MacVim)
 if has("gui_macvim")
