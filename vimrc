@@ -657,7 +657,7 @@ nmap <leader>tg :TagbarToggle<CR>
 "CtrlP
 nmap <leader>of :CtrlP<CR>
 
-#Syntastic
+"Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
