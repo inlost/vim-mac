@@ -299,8 +299,8 @@ if has('gui_running')
             " 开启抗锯齿渲染
             set anti
             " MacVim 下的字体配置
-            set guifont=Source\ Code\ Pro\ For\ Powerline:h20
-            set guifontwide=Source\ Code\ Pro\ For\ Powerline:h20
+            set guifont=Source\ Code\ Pro:h18
+            set guifontwide=Source\ Code\ Pro:h18
 
             "set transparency=8
             set lines=222 columns=222
@@ -689,3 +689,4 @@ endif
 if has("win32")
     let g:fontsize#encoding = "cp936"
 endif
+ 
