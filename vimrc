@@ -52,7 +52,7 @@ Plugin 'asins/vim-dict'
 Plugin 'scrooloose/syntastic'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'vim-scripts/Marks-Browser'
-Plugin 'vim-scripts/ShowMarks'
+Plugin 'stephenway/postcss.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
@@ -154,9 +154,9 @@ set noincsearch " 关闭显示查找匹配过程
 "set mat=2     " How many tenths of a second to blink
 
 " 制表符(设置所有的tab和缩进为4个空格)
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab " 不使用空格来替换tab
 set smarttab
 
@@ -397,31 +397,16 @@ if has("autocmd")
 
     " JavaScript 语法高亮
     au FileType html,javascript let g:javascript_enable_domhtmlcss = 1
-    au BufRead,BufNewFile *.js setf jquery
-
-    " 给各语言文件添加 Dict
-    if has('win32')
-        au FileType php setlocal dict+=$VIM/vimfiles/dict/php.dict
-        au FileType css setlocal dict+=$VIM/vimfiles/dict/css.dict
-        au FileType javascript setlocal dict+=$VIM/vimfiles/dict/javascript.dict
-    else
-        au FileType php setlocal dict+=~/.vim/bundle/vim-dict/dict/php.dic
-        au FileType css setlocal dict+=~/.vim/bundle/vim-dict/dict/css.dic
-        au FileType javascript setlocal dict+=~/.vim/bundle/vim-dict/dict/javascript.dic
-    endif
 
     " 格式化 JavaScript 文件
     au FileType javascript map <leader>jb :call g:Jsbeautify()<cr>
     au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
-    " 增加 ActionScript 语法支持
-    " au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.as setf actionscript
-
     " CSS 语法支持
-    au BufRead,BufNewFile *.css,*.less,*scss set filetype=css
+    au BufRead,BufNewFile *.css,*.less,*.scss,*.wxss set filetype=css
 
     "art 高亮支持
-    au BufRead,BufNewFile *.art,*.vue set filetype=html
+    au BufRead,BufNewFile *.art,*.vue,*.wxml set filetype=html
 
     " 增加 Objective-C 语法支持
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
@@ -434,9 +419,9 @@ endif
 autocmd! bufwritepost vimrc source $MYVIMRC
 
 " 关闭VIM的时候保存会话，按F7读取会话
-set sessionoptions=buffers,sesdir,help,tabpages,winsize
-echo has('signs')au VimLeave * mks! ~/.vim/Session.vim
-nmap <F7> :so ~/.vim/Session.vim<CR>
+"set sessionoptions=buffers,sesdir,help,tabpages,winsize
+"echo has('signs')au VimLeave * mks! ~/.vim/Session.vim
+"nmap <F7> :so ~/.vim/Session.vim<CR>
 
 
 " =====================
@@ -613,22 +598,6 @@ let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let tlist_html_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 let tlist_xhtml_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
 
-" showmarks setting
-" <Leader>mt   - 打开/关闭ShowMarks插件
-" <Leader>mo   - 强制打开ShowMarks插件
-" <Leader>mh   - 清除当前行的标记
-" <Leader>ma   - 清除当前缓冲区中所有的标记
-" <Leader>mm   - 在当前行打一个标记，使用下一个可用的标记名
-" Enable ShowMarks
-let showmarks_enable = 1
-" Show which marks
-let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890"
-" Ignore help, quickfix, non-modifiable buffers
-let showmarks_ignore_type = "hqm"
-" Hilight lower & upper marks
-let showmarks_hlline_lower = 1
-let showmarks_hlline_upper = 1
-
 " markbrowser setting
 nmap <silent> <leader>bm :MarksBrowser<cr>
 
@@ -661,13 +630,22 @@ nmap <leader>of :CtrlP<CR>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+" 设置错误符号
+let g:syntastic_error_symbol='✗'
+" 设置警告符号
+let g:syntastic_warning_symbol='⚠'
+" 是否在打开文件时检查
+let g:syntastic_check_on_open=1
+" 是否在保存文件后检查
+let g:syntastic_check_on_wq=1
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_html_tidy_exec = 'tidy5'
+
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_html_tidy_quiet_messages = { "level" : "warnings" }
 
 
 " Under the Mac(MacVim)
@@ -689,4 +667,5 @@ endif
 if has("win32")
     let g:fontsize#encoding = "cp936"
 endif
- 
+    " 增加 Objective-C 语法支持
+
