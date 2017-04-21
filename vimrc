@@ -37,7 +37,8 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'Shougo/neocomplcache.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ternjs/tern_for_vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdcommenter'
@@ -45,7 +46,6 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'othree/html5.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'gorodinskiy/vim-coloresque'
-Plugin 'burnettk/vim-angular'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'asins/vim-dict'
@@ -53,6 +53,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'vim-scripts/Marks-Browser'
 Plugin 'stephenway/postcss.vim'
+Plugin 'godlygeek/tabular'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'BufferExplorer'
 " Git plugin not hosted on GitHub
@@ -142,7 +143,7 @@ set t_vb= " close visual bell
 set ruler " 显示标尺
 set number " 行号
 
-" 命令行于状态行
+" 命令行与状态行
 set cmdheight=1 " 设置命令行的高度
 set laststatus=2 " 始终显示状态行
 
@@ -153,7 +154,7 @@ set noincsearch " 关闭显示查找匹配过程
 "set showmatch " Show matching bracets when text indicator is over them
 "set mat=2     " How many tenths of a second to blink
 
-" 制表符(设置所有的tab和缩进为4个空格)
+" 制表符(设置所有的tab和缩进为2个空格)
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -188,7 +189,7 @@ set complete=.,w,b,k,t,i
 set completeopt=longest,menu " 只在下拉菜单中显示匹配项目，并且会自动插入所有匹配项目的相同文本
 
 " 代码折叠
-set foldmethod=indent
+set foldmethod=syntax
 
 " 带有如下符号的单词不要被换行分割
 set iskeyword+=_,$,@,%,#,-
@@ -405,8 +406,8 @@ if has("autocmd")
     " CSS 语法支持
     au BufRead,BufNewFile *.css,*.less,*.scss,*.wxss set filetype=css
 
-    "art 高亮支持
-    au BufRead,BufNewFile *.art,*.vue,*.wxml set filetype=html
+    "VUE 高亮支持
+    au BufRead,BufNewFile *.vue set filetype=html.javascript.css
 
     " 增加 Objective-C 语法支持
     au BufNewFile,BufRead,BufEnter,WinEnter,FileType *.m,*.h setf objc
@@ -504,100 +505,6 @@ nmap <leader>b :<C-U>call BufPos_ActivateBuffer(v:count)<CR>
 " =====================
 " 插件配置
 " =====================
-
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" Enable heavy features.
-" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
-
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplcache_enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplcache_enable_insert_char_pre = 1
-
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-let tlist_html_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
-let tlist_xhtml_settings = 'html;h:Headers;o:Objects(ID);c:Classes'
-
 " markbrowser setting
 nmap <silent> <leader>bm :MarksBrowser<cr>
 
@@ -625,6 +532,15 @@ let g:neocomplcache_min_syntax_length = 3
 nmap <leader>tg :TagbarToggle<CR>
 "CtrlP
 nmap <leader>of :CtrlP<CR>
+
+"YCM
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_min_num_of_chars_for_completion=3
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_complete_in_comments=1
+let g:ycm_complete_in_strings=1
+let g:ycm_collect_identifiers_from_comments_and_strings=0
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
 "Syntastic
 set statusline+=%#warningmsg#
@@ -667,5 +583,3 @@ endif
 if has("win32")
     let g:fontsize#encoding = "cp936"
 endif
-    " 增加 Objective-C 语法支持
-
